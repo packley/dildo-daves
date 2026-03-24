@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Dildo Dave's Dildo Emporium</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Age Gate -->
+<div class="age-gate">
+  <div class="age-gate-box">
+    <h2>Welcome</h2>
+    <p>You must be 21 or older to enter this site.</p>
+    <div class="age-gate-buttons">
+      <button class="btn btn-primary" onclick="ageVerify(true)">I'm 21+</button>
+      <button class="btn age-gate-deny" onclick="ageVerify(false)">I'm Not</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <nav class="container nav-inner">
+    <a href="index.html" class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Shop</a></li>
+
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="breadcrumbs">
+    <a href="index.html">Home</a> / <a href="products.html">Shop</a> / <span id="breadcrumb-name">Loading...</span>
+  </div>
+
+  <div class="product-detail" id="product-detail">
+    <!-- Filled by JS -->
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="reviews-section" id="reviews-section" style="max-width: 720px; padding-bottom: 64px;">
+    <h3 style="margin-bottom: 24px;">Customer Reviews</h3>
+    <div id="reviews-list"></div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></span>
+        <p style="margin-top: 12px;">Premium intimate products. Carefully curated. Discreetly shipped.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=Vibrators">Vibrators</a></li>
+          <li><a href="products.html?cat=Non-Vibrating Toys">Non-Vibrating</a></li>
+          <li><a href="products.html?cat=Couples' Toys">Couples</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter/X</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Dildo Dave's Dildo Emporium. All rights reserved. You must be 21+ to purchase.
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  const sampleReviews = [
+    { author: "Anonymous", stars: 5, date: "March 12, 2026", text: "I loved jamming this directly in my asshole." },
+    { author: "Sarah M.", stars: 5, date: "March 8, 2026", text: "Fast shipping, discreet packaging. Great quality." },
+    { author: "Dave's Mom", stars: 5, date: "February 22, 2026", text: "I'm so proud of my son's business. I bought three." },
+    { author: "Jordan K.", stars: 4, date: "February 28, 2026", text: "Good product. Works as described. Would buy again." },
+    { author: "Alex R.", stars: 5, date: "February 15, 2026", text: "Exactly what I was looking for. High quality materials." },
+  ];
+
+  const productId = getProductIdFromURL();
+
+  loadProducts().then(products => {
+    const product = products.find(p => p.id === productId);
+    if (!product) {
+      document.getElementById('product-detail').innerHTML = '<p>Product not found. <a href="products.html">Back to shop</a>.</p>';
+      return;
+    }
+
+    document.title = `${product.name} — Dildo Dave's Dildo Emporium`;
+    document.getElementById('breadcrumb-name').textContent = product.name;
+
+    const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 3);
+
+    document.getElementById('product-detail').innerHTML = `
+      <div class="product-detail-image">
+        <img src="img/${product.id}.jpg" alt="${product.name}">
+      </div>
+      <div class="product-detail-info">
+        <div class="product-category">${product.category}</div>
+        <h1>${product.name}</h1>
+        <div class="product-detail-price">$${product.price.toFixed(2)}</div>
+        <div class="product-detail-tagline">${product.tagline}</div>
+        <p class="product-detail-desc">${product.description}</p>
+        <div class="product-meta">
+          <div class="product-meta-item">
+            <strong>Material</strong>
+            ${product.material}
+          </div>
+          <div class="product-meta-item">
+            <strong>SKU</strong>
+            DD-${String(product.id).padStart(4, '0')}
+          </div>
+          <div class="product-meta-item">
+            <strong>Shipping</strong>
+            Free over $50
+          </div>
+        </div>
+        <div class="add-to-cart-section">
+          <input type="number" class="qty-input" value="1" min="1" max="10">
+          <button class="btn btn-primary btn-lg" onclick="alert('Added to cart! (This is a demo.)')">Add to Cart</button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-light);">Free discreet shipping on orders over $50. Plain packaging.</p>
+        ${related.length > 0 ? `
+          <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);">
+            <h4 style="margin-bottom: 16px;">You Might Also Like</h4>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              ${related.map(r => `
+                <a href="product.html?id=${r.id}" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.85rem;">
+                  <img src="img/${r.id}.jpg" alt="${r.name}" style="width: 32px; height: 32px; border-radius: 4px; object-fit: cover; flex-shrink: 0;">
+                  ${r.name} — $${r.price.toFixed(2)}
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    // Render reviews
+    const reviewsHtml = sampleReviews.map(r => `
+      <div class="review">
+        <div class="review-header">
+          <span class="review-author">${r.author}</span>
+          <span class="review-date">${r.date}</span>
+        </div>
+        <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+        <p class="review-text">${r.text}</p>
+      </div>
+    `).join('');
+    document.getElementById('reviews-list').innerHTML = reviewsHtml;
+  });
+</script>
+</body>
+</html>

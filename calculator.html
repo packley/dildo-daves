@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Calculator — Dildo Dave's Dildo Emporium</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F8F7F5;
+  color: #1A1A1A;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Nav ── */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E5E5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  text-decoration: none;
+}
+
+.nav-logo span {
+  color: #2C3E6B;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #6B6B6B;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.nav-links a:hover {
+  color: #1A1A1A;
+  background: #F8F7F5;
+}
+
+.nav-links a.active {
+  color: #FFFFFF;
+  background: #2C3E6B;
+}
+
+/* ── Page Layout ── */
+.page-hero {
+  padding: 56px 0 32px;
+  text-align: center;
+}
+
+.page-hero h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1A1A1A;
+}
+
+.page-hero p {
+  font-size: 1.05rem;
+  color: #6B6B6B;
+  max-width: 640px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1A1A1A;
+}
+
+.section-subtitle {
+  font-size: 0.92rem;
+  color: #6B6B6B;
+  margin-bottom: 24px;
+}
+
+/* ── Cards ── */
+.card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
+
+/* ── Input Controls ── */
+.inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #6B6B6B;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.input-group .value-display {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2C3E6B;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #E5E5E5;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2C3E6B;
+  cursor: pointer;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: background 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #1E2D4F;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2C3E6B;
+  cursor: pointer;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+input[type="number"] {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #1A1A1A;
+  width: 100%;
+  max-width: 200px;
+  transition: border 0.2s;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #2C3E6B;
+  box-shadow: 0 0 0 3px rgba(44, 62, 107, 0.1);
+}
+
+/* ── Business Model Presets ── */
+.presets-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.preset-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border: 1px solid #E5E5E5;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #6B6B6B;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preset-btn:hover {
+  border-color: #2C3E6B;
+  color: #2C3E6B;
+  background: rgba(44, 62, 107, 0.04);
+}
+
+.preset-btn.active {
+  background: #2C3E6B;
+  color: #FFFFFF;
+  border-color: #2C3E6B;
+}
+
+/* ── Results Dashboard ── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.metric-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.metric-card .metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6B6B6B;
+  margin-bottom: 6px;
+}
+
+.metric-card .metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-card .metric-value.accent {
+  color: #2C3E6B;
+}
+
+.metric-card .metric-value.success {
+  color: #2D6A4F;
+}
+
+.metric-card .metric-value.warning {
+  color: #D4850D;
+}
+
+/* ── Milestone Indicator ── */
+.milestone-bar {
+  margin-top: 8px;
+}
+
+.milestone-bar .bar-outer {
+  width: 100%;
+  height: 10px;
+  background: #E5E5E5;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.milestone-bar .bar-inner {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.milestone-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Founder Income Badge ── */
+.founder-income-card {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border: 2px solid #E5E5E5;
+}
+
+.founder-income-card .left-side {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.founder-income-card .milestone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.badge-red { background: #FDE8E8; color: #B91C1C; }
+.badge-neutral { background: #F3F4F6; color: #6B6B6B; }
+.badge-green { background: #D1FAE5; color: #065F46; }
+.badge-bright-green { background: #A7F3D0; color: #047857; }
+.badge-gold { background: #FEF3C7; color: #92400E; }
+
+/* ── Projection Table ── */
+.projection-table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.projection-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+
+.projection-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6B6B6B;
+  text-align: right;
+  padding: 12px 16px;
+  border-bottom: 2px solid #E5E5E5;
+  white-space: nowrap;
+}
+
+.projection-table th:first-child {
+  text-align: left;
+}
+
+.projection-table td {
+  padding: 14px 16px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  border-bottom: 1px solid #F0F0F0;
+  white-space: nowrap;
+}
+
+.projection-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: #2C3E6B;
+}
+
+.projection-table tr:last-child td {
+  border-bottom: none;
+}
+
+.projection-table tr:hover td {
+  background: rgba(44, 62, 107, 0.02);
+}
+
+/* ── Chart ── */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  margin-top: 24px;
+}
+
+/* ── Time to Income Replacement ── */
+.income-replacement-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.income-replacement-content .left {
+  flex: 1;
+}
+
+.income-replacement-content .right {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.months-big {
+  font-size: 4.5rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: #2C3E6B;
+  line-height: 1;
+}
+
+.months-label {
+  font-size: 1rem;
+  color: #6B6B6B;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.years-equiv {
+  font-size: 0.88rem;
+  color: #6B6B6B;
+  margin-top: 12px;
+  font-weight: 400;
+}
+
+.progress-bar-outer {
+  width: 100%;
+  max-width: 400px;
+  height: 14px;
+  background: #E5E5E5;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+.progress-bar-inner {
+  height: 100%;
+  border-radius: 7px;
+  background: linear-gradient(90deg, #2C3E6B, #2D6A4F);
+  transition: width 0.6s ease;
+}
+
+.progress-label {
+  font-size: 0.78rem;
+  color: #6B6B6B;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ── Scenario Cards ── */
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.scenario-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  padding: 28px;
+  text-align: center;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.scenario-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+  transform: translateY(-2px);
+}
+
+.scenario-card.highlight {
+  border-color: #2C3E6B;
+  box-shadow: 0 4px 16px rgba(44, 62, 107, 0.1);
+}
+
+.scenario-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.scenario-card .scenario-params {
+  font-size: 0.78rem;
+  color: #6B6B6B;
+  margin-bottom: 20px;
+}
+
+.scenario-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 0.88rem;
+}
+
+.scenario-row:last-child {
+  border-bottom: none;
+}
+
+.scenario-row .label {
+  color: #6B6B6B;
+  font-weight: 500;
+}
+
+.scenario-row .value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.scenario-row .value.profit {
+  color: #2D6A4F;
+}
+
+/* ── Footer ── */
+.page-footer {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 0.82rem;
+  color: #6B6B6B;
+  border-top: 1px solid #E5E5E5;
+  margin-top: 48px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .inputs-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .scenarios-grid { grid-template-columns: 1fr; }
+  .income-replacement-content { flex-direction: column; }
+}
+
+@media (max-width: 600px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .page-hero h1 { font-size: 1.8rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="container nav-inner">
+    <a href="index.html" class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="calculator.html" class="active">Calculator</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="container">
+    <h1>Financial Calculator</h1>
+    <p>Model your revenue, margins, and growth trajectory. Adjust the inputs below and watch every metric update in real time.</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 1: INTERACTIVE INPUTS               -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Assumptions &amp; Inputs</h2>
+    <p class="section-subtitle">Drag the sliders or type values to model different scenarios.</p>
+
+    <div class="card">
+      <div class="inputs-grid">
+        <!-- Orders per month -->
+        <div class="input-group">
+          <label>Orders per Month</label>
+          <div class="value-display" id="ordersDisplay">100</div>
+          <input type="range" id="ordersSlider" min="0" max="5000" value="100" step="10">
+        </div>
+
+        <!-- Average order value -->
+        <div class="input-group">
+          <label>Average Order Value</label>
+          <div class="value-display" id="aovDisplay">$55</div>
+          <input type="range" id="aovSlider" min="30" max="100" value="55" step="1">
+        </div>
+
+        <!-- Gross margin -->
+        <div class="input-group">
+          <label>Gross Margin %</label>
+          <div class="value-display" id="marginDisplay">35%</div>
+          <input type="range" id="marginSlider" min="25" max="75" value="35" step="1">
+        </div>
+
+        <!-- Monthly fixed costs -->
+        <div class="input-group">
+          <label>Monthly Fixed Costs</label>
+          <div class="value-display" id="fixedCostsDisplay">$150</div>
+          <input type="number" id="fixedCostsInput" value="150" min="0" step="10">
+        </div>
+
+        <!-- Monthly ad spend -->
+        <div class="input-group">
+          <label>Monthly Ad Spend</label>
+          <div class="value-display" id="adSpendDisplay">$500</div>
+          <input type="range" id="adSpendSlider" min="0" max="15000" value="500" step="50">
+        </div>
+      </div>
+
+      <!-- Business Model Presets -->
+      <div style="margin-top: 28px; border-top: 1px solid #E5E5E5; padding-top: 24px;">
+        <label style="font-size:0.82rem;font-weight:600;color:#6B6B6B;text-transform:uppercase;letter-spacing:0.5px;">Business Model Preset</label>
+        <div class="presets-row">
+          <button class="preset-btn active" data-margin="35">Pure Dropshipping — 35%</button>
+          <button class="preset-btn" data-margin="50">Hybrid / 3PL — 50%</button>
+          <button class="preset-btn" data-margin="60">Held Inventory — 60%</button>
+          <button class="preset-btn" data-margin="70">Private Label — 70%</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 2: REAL-TIME RESULTS DASHBOARD      -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Results Dashboard</h2>
+    <p class="section-subtitle">All figures update instantly as you change assumptions.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Monthly Revenue</div>
+        <div class="metric-value accent" id="metricMonthlyRev">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Annual Revenue</div>
+        <div class="metric-value accent" id="metricAnnualRev">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Monthly Gross Profit</div>
+        <div class="metric-value" id="metricMonthlyGP">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Annual Gross Profit</div>
+        <div class="metric-value" id="metricAnnualGP">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Annual Operating Costs</div>
+        <div class="metric-value warning" id="metricAnnualCosts">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Annual Net Profit</div>
+        <div class="metric-value success" id="metricAnnualNet">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Break-Even Orders / Mo</div>
+        <div class="metric-value" id="metricBreakeven">—</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Per-Founder Annual Income</div>
+        <div class="metric-value" id="metricFounderIncome">—</div>
+      </div>
+
+      <!-- Milestone Indicator -->
+      <div class="metric-card founder-income-card" id="milestoneCard">
+        <div class="left-side">
+          <div>
+            <div class="metric-label" style="text-align:left;">Per-Founder Income Milestone</div>
+            <div class="metric-value" id="milestoneValue" style="text-align:left;font-size:2rem;">—</div>
+          </div>
+          <span class="milestone-badge badge-neutral" id="milestoneBadge">—</span>
+        </div>
+        <div class="milestone-bar" style="flex:1;max-width:360px;">
+          <div class="bar-outer">
+            <div class="bar-inner" id="milestoneBarInner" style="width:0%;background:#6B6B6B;"></div>
+          </div>
+          <div class="milestone-label">
+            <span>$0</span>
+            <span>$50K</span>
+            <span>$100K</span>
+            <span>$200K+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 3: 5-YEAR PROJECTION                -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">5-Year Projection</h2>
+    <p class="section-subtitle">Forecast growth with compounding order volume and improving margins.</p>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div class="inputs-grid">
+        <div class="input-group">
+          <label>Annual Order Growth Rate</label>
+          <div class="value-display" id="growthDisplay">100%</div>
+          <input type="range" id="growthSlider" min="0" max="300" value="100" step="5">
+        </div>
+        <div class="input-group">
+          <label>Annual Margin Improvement</label>
+          <div class="value-display" id="marginImpDisplay">3%</div>
+          <input type="range" id="marginImpSlider" min="0" max="10" value="3" step="0.5">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="projection-table-wrapper">
+        <table class="projection-table" id="projectionTable">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Orders / Mo</th>
+              <th>Margin %</th>
+              <th>Monthly Rev</th>
+              <th>Annual Rev</th>
+              <th>Annual Costs</th>
+              <th>Annual Net Profit</th>
+              <th>Per-Founder Income</th>
+            </tr>
+          </thead>
+          <tbody id="projectionBody"></tbody>
+        </table>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="projectionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 4: TIME TO INCOME REPLACEMENT       -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Time to Income Replacement</h2>
+    <p class="section-subtitle">How many months until each founder hits a target annual income?</p>
+
+    <div class="card">
+      <div class="income-replacement-content">
+        <div class="left">
+          <div class="input-group">
+            <label>Target Annual Income per Founder</label>
+            <div class="value-display" id="targetIncomeDisplay">$200,000</div>
+            <input type="number" id="targetIncomeInput" value="200000" min="0" step="10000">
+          </div>
+        </div>
+        <div class="right">
+          <div class="months-big" id="monthsToTarget">—</div>
+          <div class="months-label">months to reach target</div>
+          <div class="years-equiv" id="yearsEquiv"></div>
+          <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="targetProgressBar" style="width:0%;"></div>
+          </div>
+          <div class="progress-label" id="targetProgressLabel">Current vs. target</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- SECTION 5: SCENARIO COMPARISON              -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Scenario Comparison</h2>
+    <p class="section-subtitle">Three growth trajectories using your current starting assumptions.</p>
+
+    <div class="scenarios-grid">
+      <!-- Conservative -->
+      <div class="scenario-card" id="scenConservative">
+        <h3>Conservative</h3>
+        <div class="scenario-params">50% annual growth &middot; 2% margin gain</div>
+        <div id="scenConservativeBody"></div>
+      </div>
+      <!-- Moderate -->
+      <div class="scenario-card highlight" id="scenModerate">
+        <h3>Moderate</h3>
+        <div class="scenario-params">100% annual growth &middot; 3% margin gain</div>
+        <div id="scenModerateBody"></div>
+      </div>
+      <!-- Optimistic -->
+      <div class="scenario-card" id="scenOptimistic">
+        <h3>Optimistic</h3>
+        <div class="scenario-params">200% annual growth &middot; 5% margin gain</div>
+        <div id="scenOptimisticBody"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.container -->
+
+<footer class="page-footer">
+  <div class="container">&copy; 2026 Dildo Dave's Dildo Emporium. For planning purposes only.</div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ── DOM refs ── */
+  const dom = {
+    ordersSlider:     document.getElementById('ordersSlider'),
+    ordersDisplay:    document.getElementById('ordersDisplay'),
+    aovSlider:        document.getElementById('aovSlider'),
+    aovDisplay:       document.getElementById('aovDisplay'),
+    marginSlider:     document.getElementById('marginSlider'),
+    marginDisplay:    document.getElementById('marginDisplay'),
+    fixedCostsInput:  document.getElementById('fixedCostsInput'),
+    fixedCostsDisplay:document.getElementById('fixedCostsDisplay'),
+    adSpendSlider:    document.getElementById('adSpendSlider'),
+    adSpendDisplay:   document.getElementById('adSpendDisplay'),
+    growthSlider:     document.getElementById('growthSlider'),
+    growthDisplay:    document.getElementById('growthDisplay'),
+    marginImpSlider:  document.getElementById('marginImpSlider'),
+    marginImpDisplay: document.getElementById('marginImpDisplay'),
+    targetIncomeInput:document.getElementById('targetIncomeInput'),
+    targetIncomeDisplay: document.getElementById('targetIncomeDisplay'),
+  };
+
+  /* ── Formatters ── */
+  const fmt = {
+    usd: (n) => {
+      if (Math.abs(n) >= 1e6) return (n < 0 ? '-' : '') + '$' + (Math.abs(n) / 1e6).toFixed(2) + 'M';
+      if (Math.abs(n) >= 1e3) return (n < 0 ? '-' : '') + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+      return (n < 0 ? '-' : '') + '$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+    },
+    usdShort: (n) => {
+      if (Math.abs(n) >= 1e6) return (n < 0 ? '-' : '') + '$' + (Math.abs(n) / 1e6).toFixed(1) + 'M';
+      if (Math.abs(n) >= 1e3) return (n < 0 ? '-' : '') + '$' + (Math.abs(n) / 1e3).toFixed(0) + 'K';
+      return (n < 0 ? '-' : '') + '$' + Math.round(Math.abs(n));
+    },
+    num: (n) => Math.round(n).toLocaleString('en-US'),
+    pct: (n) => n.toFixed(1) + '%',
+  };
+
+  /* ── Read inputs ── */
+  function getInputs() {
+    return {
+      orders:     +dom.ordersSlider.value,
+      aov:        +dom.aovSlider.value,
+      margin:     +dom.marginSlider.value / 100,
+      fixedCosts: +dom.fixedCostsInput.value,
+      adSpend:    +dom.adSpendSlider.value,
+      growth:     +dom.growthSlider.value / 100,
+      marginImp:  +dom.marginImpSlider.value / 100,
+      targetIncome: +dom.targetIncomeInput.value,
+    };
+  }
+
+  /* ── Chart instance ── */
+  let chartInstance = null;
+
+  /* ══════════════ MAIN RECALCULATE ══════════════ */
+  function recalculate() {
+    const inp = getInputs();
+
+    /* — Display labels — */
+    dom.ordersDisplay.textContent    = fmt.num(inp.orders);
+    dom.aovDisplay.textContent       = '$' + inp.aov;
+    dom.marginDisplay.textContent    = Math.round(inp.margin * 100) + '%';
+    dom.fixedCostsDisplay.textContent= fmt.usd(inp.fixedCosts);
+    dom.adSpendDisplay.textContent   = fmt.usd(inp.adSpend);
+    dom.growthDisplay.textContent    = Math.round(inp.growth * 100) + '%';
+    dom.marginImpDisplay.textContent = (inp.marginImp * 100).toFixed(1) + '%';
+    dom.targetIncomeDisplay.textContent = fmt.usd(inp.targetIncome);
+
+    /* — Core calcs — */
+    const monthlyRev    = inp.orders * inp.aov;
+    const annualRev     = monthlyRev * 12;
+    const monthlyGP     = monthlyRev * inp.margin;
+    const annualGP      = monthlyGP * 12;
+    const annualCosts   = (inp.fixedCosts * 12) + (inp.adSpend * 12);
+    const annualNet     = annualGP - annualCosts;
+    const founderIncome = annualNet / 2;
+
+    const perOrderGP = inp.aov * inp.margin;
+    const monthlyCosts = inp.fixedCosts + inp.adSpend;
+    const breakeven = perOrderGP > 0 ? Math.ceil(monthlyCosts / perOrderGP) : Infinity;
+
+    /* — Populate metrics — */
+    document.getElementById('metricMonthlyRev').textContent   = fmt.usd(monthlyRev);
+    document.getElementById('metricAnnualRev').textContent    = fmt.usd(annualRev);
+    document.getElementById('metricMonthlyGP').textContent    = fmt.usd(monthlyGP);
+    document.getElementById('metricAnnualGP').textContent     = fmt.usd(annualGP);
+    document.getElementById('metricAnnualCosts').textContent  = fmt.usd(annualCosts);
+    document.getElementById('metricAnnualNet').textContent    = fmt.usd(annualNet);
+    document.getElementById('metricBreakeven').textContent    = breakeven === Infinity ? '—' : fmt.num(breakeven);
+    document.getElementById('metricFounderIncome').textContent= fmt.usd(founderIncome);
+
+    /* color-code net profit */
+    const netEl = document.getElementById('metricAnnualNet');
+    netEl.className = 'metric-value ' + (annualNet >= 0 ? 'success' : 'warning');
+
+    /* — Milestone — */
+    const milestoneVal = document.getElementById('milestoneValue');
+    const milestoneBadge = document.getElementById('milestoneBadge');
+    const milestoneBar = document.getElementById('milestoneBarInner');
+    milestoneVal.textContent = fmt.usd(founderIncome);
+
+    let badgeClass, badgeText, barPct, barColor;
+    if (founderIncome < 0) {
+      badgeClass = 'badge-red'; badgeText = 'Negative';
+      barPct = 0; barColor = '#B91C1C';
+    } else if (founderIncome < 50000) {
+      badgeClass = 'badge-neutral'; badgeText = 'Below $50K';
+      barPct = (founderIncome / 200000) * 100; barColor = '#6B6B6B';
+    } else if (founderIncome < 100000) {
+      badgeClass = 'badge-green'; badgeText = '$50K — $100K';
+      barPct = (founderIncome / 200000) * 100; barColor = '#2D6A4F';
+    } else if (founderIncome < 200000) {
+      badgeClass = 'badge-bright-green'; badgeText = '$100K — $200K';
+      barPct = (founderIncome / 200000) * 100; barColor = '#047857';
+    } else {
+      badgeClass = 'badge-gold'; badgeText = '$200K+ ';
+      barPct = 100; barColor = '#D4850D';
+    }
+    milestoneBadge.className = 'milestone-badge ' + badgeClass;
+    milestoneBadge.textContent = badgeText;
+    milestoneBar.style.width = Math.min(barPct, 100) + '%';
+    milestoneBar.style.background = barColor;
+
+    /* — 5-Year Projection — */
+    const years = [];
+    for (let y = 1; y <= 5; y++) {
+      const yrOrders = inp.orders * Math.pow(1 + inp.growth, y - 1);
+      const yrMargin = Math.min(inp.margin + inp.marginImp * (y - 1), 0.90);
+      const yrMonthlyRev = yrOrders * inp.aov;
+      const yrAnnualRev = yrMonthlyRev * 12;
+      const yrAnnualCosts = annualCosts;
+      const yrAnnualNet = (yrAnnualRev * yrMargin) - yrAnnualCosts;
+      const yrFounder = yrAnnualNet / 2;
+      years.push({ y, orders: yrOrders, margin: yrMargin, monthlyRev: yrMonthlyRev, annualRev: yrAnnualRev, annualCosts: yrAnnualCosts, annualNet: yrAnnualNet, founder: yrFounder });
+    }
+
+    const tbody = document.getElementById('projectionBody');
+    tbody.innerHTML = years.map(r => `
+      <tr>
+        <td>Year ${r.y}</td>
+        <td>${fmt.num(r.orders)}</td>
+        <td>${fmt.pct(r.margin * 100)}</td>
+        <td>${fmt.usd(r.monthlyRev)}</td>
+        <td>${fmt.usd(r.annualRev)}</td>
+        <td>${fmt.usd(r.annualCosts)}</td>
+        <td style="color:${r.annualNet >= 0 ? '#2D6A4F' : '#B91C1C'}">${fmt.usd(r.annualNet)}</td>
+        <td style="color:${r.founder >= 0 ? '#2C3E6B' : '#B91C1C'};font-weight:700">${fmt.usd(r.founder)}</td>
+      </tr>
+    `).join('');
+
+    /* — Chart — */
+    const labels = years.map(r => 'Year ' + r.y);
+    const revData = years.map(r => r.annualRev);
+    const founderData = years.map(r => r.founder);
+
+    if (chartInstance) chartInstance.destroy();
+    const ctx = document.getElementById('projectionChart').getContext('2d');
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Annual Revenue',
+            data: revData,
+            borderColor: '#2C3E6B',
+            backgroundColor: 'rgba(44,62,107,0.08)',
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#2C3E6B',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 2.5,
+          },
+          {
+            label: 'Per-Founder Income',
+            data: founderData,
+            borderColor: '#2D6A4F',
+            backgroundColor: 'rgba(45,106,79,0.08)',
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#2D6A4F',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 2.5,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { family: "'Inter', sans-serif", size: 13, weight: '500' }, boxWidth: 12, padding: 20 },
+          },
+          tooltip: {
+            backgroundColor: '#1A1A1A',
+            titleFont: { family: "'Inter', sans-serif", size: 13 },
+            bodyFont: { family: "'Inter', sans-serif", size: 12 },
+            padding: 12,
+            cornerRadius: 8,
+            callbacks: {
+              label: function(ctx) {
+                return ctx.dataset.label + ': ' + fmt.usd(ctx.parsed.y);
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            ticks: {
+              font: { family: "'Inter', sans-serif", size: 11 },
+              callback: function(v) { return fmt.usdShort(v); },
+              color: '#6B6B6B',
+            },
+            grid: { color: 'rgba(0,0,0,0.04)' },
+            border: { display: false },
+          },
+          x: {
+            ticks: { font: { family: "'Inter', sans-serif", size: 12, weight: '500' }, color: '#6B6B6B' },
+            grid: { display: false },
+            border: { display: false },
+          }
+        }
+      }
+    });
+
+    /* — Time to Income Replacement — */
+    const targetAnnual = inp.targetIncome;
+    let monthsNeeded = null;
+    if (founderIncome >= targetAnnual) {
+      monthsNeeded = 0;
+    } else if (inp.growth <= 0) {
+      monthsNeeded = null; // never
+    } else {
+      // monthly compounding of growth: each month growth rate = (1+annual)^(1/12)-1
+      const monthlyGrowthRate = Math.pow(1 + inp.growth, 1 / 12) - 1;
+      // month m: orders_m = orders * (1+monthlyGrowthRate)^m
+      // founder income at month m: ((orders_m * aov * 12) * margin_at_m - annualCosts) / 2
+      // margin at month m: margin + marginImp * (m / 12)
+      for (let m = 1; m <= 600; m++) { // up to 50 years
+        const ordersM = inp.orders * Math.pow(1 + monthlyGrowthRate, m);
+        const marginM = Math.min(inp.margin + inp.marginImp * (m / 12), 0.90);
+        const annualRevM = ordersM * inp.aov * 12;
+        const founderM = (annualRevM * marginM - annualCosts) / 2;
+        if (founderM >= targetAnnual) {
+          monthsNeeded = m;
+          break;
+        }
+      }
+    }
+
+    const monthsEl = document.getElementById('monthsToTarget');
+    const yearsEl = document.getElementById('yearsEquiv');
+    const progBar = document.getElementById('targetProgressBar');
+    const progLabel = document.getElementById('targetProgressLabel');
+
+    if (monthsNeeded === 0) {
+      monthsEl.textContent = '0';
+      monthsEl.style.color = '#2D6A4F';
+      yearsEl.textContent = 'You are already there!';
+      progBar.style.width = '100%';
+      progLabel.textContent = fmt.usd(founderIncome) + ' / ' + fmt.usd(targetAnnual) + ' target';
+    } else if (monthsNeeded === null) {
+      monthsEl.textContent = '—';
+      monthsEl.style.color = '#B91C1C';
+      yearsEl.textContent = 'Not reachable with 0% growth';
+      progBar.style.width = Math.max(0, Math.min(100, (founderIncome / targetAnnual) * 100)) + '%';
+      progLabel.textContent = fmt.usd(Math.max(0, founderIncome)) + ' / ' + fmt.usd(targetAnnual) + ' target';
+    } else {
+      monthsEl.textContent = monthsNeeded;
+      monthsEl.style.color = '#2C3E6B';
+      const yrs = Math.floor(monthsNeeded / 12);
+      const mos = monthsNeeded % 12;
+      yearsEl.textContent = (yrs > 0 ? yrs + ' year' + (yrs !== 1 ? 's' : '') : '') + (yrs > 0 && mos > 0 ? ', ' : '') + (mos > 0 ? mos + ' month' + (mos !== 1 ? 's' : '') : '');
+      const pct = Math.max(0, Math.min(100, (founderIncome / targetAnnual) * 100));
+      progBar.style.width = pct + '%';
+      progLabel.textContent = fmt.usd(Math.max(0, founderIncome)) + ' / ' + fmt.usd(targetAnnual) + ' target';
+    }
+
+    /* — Scenario Comparison — */
+    function buildScenario(growthRate, marginGain) {
+      const results = {};
+      for (const yr of [1, 3]) {
+        const yrOrders = inp.orders * Math.pow(1 + growthRate, yr - 1);
+        const yrMargin = Math.min(inp.margin + marginGain * (yr - 1), 0.90);
+        const yrAnnualRev = yrOrders * inp.aov * 12;
+        const yrAnnualNet = (yrAnnualRev * yrMargin) - annualCosts;
+        results['yr' + yr] = { revenue: yrAnnualRev, net: yrAnnualNet, founder: yrAnnualNet / 2 };
+      }
+      return results;
+    }
+
+    function renderScenario(containerId, data) {
+      const el = document.getElementById(containerId);
+      el.innerHTML = `
+        <div class="scenario-row"><span class="label">Year 1 Revenue</span><span class="value">${fmt.usd(data.yr1.revenue)}</span></div>
+        <div class="scenario-row"><span class="label">Year 1 Founder Income</span><span class="value profit">${fmt.usd(data.yr1.founder)}</span></div>
+        <div class="scenario-row" style="margin-top:4px;border-top:2px solid #E5E5E5;padding-top:12px;"><span class="label">Year 3 Revenue</span><span class="value">${fmt.usd(data.yr3.revenue)}</span></div>
+        <div class="scenario-row"><span class="label">Year 3 Founder Income</span><span class="value profit" style="font-size:1.1rem;">${fmt.usd(data.yr3.founder)}</span></div>
+      `;
+    }
+
+    renderScenario('scenConservativeBody', buildScenario(0.50, 0.02));
+    renderScenario('scenModerateBody',     buildScenario(1.00, 0.03));
+    renderScenario('scenOptimisticBody',   buildScenario(2.00, 0.05));
+  }
+
+  /* ── Event listeners ── */
+  const allSliders = [dom.ordersSlider, dom.aovSlider, dom.marginSlider, dom.adSpendSlider, dom.growthSlider, dom.marginImpSlider];
+  allSliders.forEach(s => s.addEventListener('input', recalculate));
+  dom.fixedCostsInput.addEventListener('input', recalculate);
+  dom.targetIncomeInput.addEventListener('input', recalculate);
+
+  /* Presets */
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      dom.marginSlider.value = this.dataset.margin;
+      recalculate();
+    });
+  });
+
+  /* Also deactivate preset highlight if user manually drags margin slider */
+  dom.marginSlider.addEventListener('input', function() {
+    const val = +this.value;
+    let matched = false;
+    document.querySelectorAll('.preset-btn').forEach(b => {
+      if (+b.dataset.margin === val) { b.classList.add('active'); matched = true; }
+      else { b.classList.remove('active'); }
+    });
+  });
+
+  /* ── Initial calc ── */
+  recalculate();
+
+})();
+</script>
+</body>
+</html>

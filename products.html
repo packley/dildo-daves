@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Dildo Dave's Dildo Emporium</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Age Gate -->
+<div class="age-gate">
+  <div class="age-gate-box">
+    <h2>Welcome</h2>
+    <p>You must be 21 or older to enter this site.</p>
+    <div class="age-gate-buttons">
+      <button class="btn btn-primary" onclick="ageVerify(true)">I'm 21+</button>
+      <button class="btn age-gate-deny" onclick="ageVerify(false)">I'm Not</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <nav class="container nav-inner">
+    <a href="index.html" class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Shop</a></li>
+
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Page Header -->
+<section class="hero" style="padding: 56px 0;">
+  <div class="container">
+    <h1>The Collection</h1>
+    <p class="subtitle">Body-safe materials only. Carefully curated. Discreetly shipped.</p>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" data-cat="all">All Products</button>
+      <button class="filter-btn" data-cat="Vibrators">Vibrators</button>
+      <button class="filter-btn" data-cat="Non-Vibrating Toys">Non-Vibrating</button>
+      <button class="filter-btn" data-cat="Couples' Toys">Couples</button>
+      <button class="filter-btn" data-cat="Lubricants & Accessories">Lubricants & Accessories</button>
+      <button class="filter-btn" data-cat="Gag Gifts & Novelty">Gag Gifts</button>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </div>
+</section>
+
+<!-- Email Signup -->
+<section class="signup-section">
+  <div class="container">
+    <h2>Don't Miss Out</h2>
+    <p>New products, exclusive deals, and member-only offers.</p>
+    <form class="signup-form" onsubmit="event.preventDefault(); alert('Thanks! (This is a demo.)')">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></span>
+        <p style="margin-top: 12px;">Premium intimate products. Carefully curated. Discreetly shipped.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=Vibrators">Vibrators</a></li>
+          <li><a href="products.html?cat=Non-Vibrating Toys">Non-Vibrating</a></li>
+          <li><a href="products.html?cat=Couples' Toys">Couples</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter/X</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Dildo Dave's Dildo Emporium. All rights reserved. You must be 21+ to purchase.
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  let allProducts = [];
+
+  loadProducts().then(products => {
+    allProducts = products;
+
+    // Check URL param for category pre-filter
+    const urlCat = new URLSearchParams(window.location.search).get('cat');
+    if (urlCat) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === urlCat);
+      });
+      renderProducts(urlCat);
+    } else {
+      renderProducts('all');
+    }
+  });
+
+  function renderProducts(category) {
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = '';
+    const filtered = category === 'all' ? allProducts : allProducts.filter(p => p.category === category);
+    filtered.forEach(p => grid.appendChild(createProductCard(p)));
+  }
+
+  document.getElementById('filter-bar').addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProducts(btn.dataset.cat);
+  });
+</script>
+</body>
+</html>

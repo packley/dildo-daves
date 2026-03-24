@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>90-Day Content Calendar — Dildo Dave's Dildo Emporium</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F8F7F5;
+  color: #1A1A1A;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Navigation ── */
+.site-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E5E5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  text-decoration: none;
+}
+
+.nav-logo span {
+  color: #2C3E6B;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #6B6B6B;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #2C3E6B;
+}
+
+/* ── Page Header ── */
+.page-header {
+  padding: 56px 0 40px;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #1A1A1A;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: #6B6B6B;
+  max-width: 640px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* ── Summary Cards ── */
+.summary-section {
+  padding-bottom: 40px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.summary-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.summary-card .number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2C3E6B;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.summary-card .label {
+  font-size: 0.85rem;
+  color: #6B6B6B;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.breakdown-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.breakdown-card h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #1A1A1A;
+}
+
+.breakdown-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #6B6B6B;
+}
+
+.breakdown-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.breakdown-item strong {
+  color: #1A1A1A;
+  font-weight: 600;
+}
+
+/* ── Filter Bar ── */
+.filter-section {
+  padding-bottom: 32px;
+}
+
+.filter-group {
+  margin-bottom: 16px;
+}
+
+.filter-group-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6B6B6B;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border: 1px solid #E5E5E5;
+  border-radius: 100px;
+  background: #FFFFFF;
+  color: #6B6B6B;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: #2C3E6B;
+  color: #2C3E6B;
+}
+
+.filter-btn.active {
+  background: #2C3E6B;
+  border-color: #2C3E6B;
+  color: #FFFFFF;
+}
+
+.results-count {
+  font-size: 0.875rem;
+  color: #6B6B6B;
+  padding: 12px 0;
+}
+
+.results-count strong {
+  color: #1A1A1A;
+}
+
+/* ── Calendar Grid ── */
+.calendar-grid {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 80px;
+}
+
+.calendar-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  border-radius: 12px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 20px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.calendar-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border-color: #d0d0d0;
+}
+
+.calendar-card.rest-day {
+  opacity: 0.55;
+  background: #FBFBFB;
+}
+
+.day-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2px;
+}
+
+.day-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2C3E6B;
+  line-height: 1;
+}
+
+.day-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6B6B6B;
+  font-weight: 600;
+}
+
+.card-body {
+  min-width: 0;
+}
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Platform colors */
+.tag-tiktok       { background: #F0E6F6; color: #6B21A8; }
+.tag-instagram    { background: #FCE7F3; color: #BE185D; }
+.tag-twitter      { background: #E0F2FE; color: #0369A1; }
+.tag-youtube      { background: #FEE2E2; color: #B91C1C; }
+.tag-email        { background: #ECFDF5; color: #047857; }
+.tag-rest         { background: #F3F4F6; color: #6B6B6B; }
+
+/* Content type tags */
+.tag-type-video   { background: #FEF3C7; color: #92400E; }
+.tag-type-image   { background: #E0E7FF; color: #3730A3; }
+.tag-type-text    { background: #F3F4F6; color: #374151; }
+.tag-type-email   { background: #ECFDF5; color: #047857; }
+
+.tag-founder {
+  background: #F8F7F5;
+  color: #6B6B6B;
+  border: 1px solid #E5E5E5;
+}
+
+.card-concept {
+  font-size: 0.95rem;
+  color: #1A1A1A;
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+
+.card-concept .founders-write {
+  display: inline;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2C3E6B;
+  background: #EEF0F6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.card-rest-text {
+  font-size: 0.95rem;
+  color: #6B6B6B;
+  font-style: italic;
+}
+
+/* ── Footer ── */
+.site-footer {
+  background: #FFFFFF;
+  border-top: 1px solid #E5E5E5;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.site-footer p {
+  font-size: 0.85rem;
+  color: #6B6B6B;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .page-header h1 { font-size: 1.75rem; }
+  .summary-breakdown { grid-template-columns: 1fr; }
+  .calendar-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .day-badge {
+    flex-direction: row;
+    gap: 8px;
+    align-items: baseline;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="container nav-inner">
+    <a href="index.html" class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="calendar.html" class="active">Calendar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="container">
+    <div class="page-header">
+      <h1>90-Day Content Calendar</h1>
+      <p>The master content roadmap for Dildo Dave's Dildo Emporium. Ninety days of video, social, and email content mapped out and ready to produce.</p>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="summary-section" id="summarySection">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-section">
+      <div class="filter-group">
+        <span class="filter-group-label">Platform</span>
+        <div class="filter-buttons" id="platformFilters">
+          <button class="filter-btn active" data-filter="all" data-group="platform">All</button>
+          <button class="filter-btn" data-filter="TikTok" data-group="platform">TikTok</button>
+          <button class="filter-btn" data-filter="Instagram" data-group="platform">Instagram</button>
+          <button class="filter-btn" data-filter="Twitter/X" data-group="platform">Twitter/X</button>
+          <button class="filter-btn" data-filter="YouTube" data-group="platform">YouTube</button>
+          <button class="filter-btn" data-filter="Email" data-group="platform">Email</button>
+          <button class="filter-btn" data-filter="Rest" data-group="platform">Rest Days</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group-label">Content Type</span>
+        <div class="filter-buttons" id="typeFilters">
+          <button class="filter-btn active" data-filter="all" data-group="type">All</button>
+          <button class="filter-btn" data-filter="Video" data-group="type">Video</button>
+          <button class="filter-btn" data-filter="Image" data-group="type">Image</button>
+          <button class="filter-btn" data-filter="Text" data-group="type">Text Post</button>
+          <button class="filter-btn" data-filter="Email" data-group="type">Email</button>
+        </div>
+      </div>
+      <div class="results-count" id="resultsCount"></div>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="calendar-grid" id="calendarGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 Dildo Dave's Dildo Emporium. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+const calendarData = [
+  // ── WEEK 1: Launch Week ──
+  { day: 1, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Grand Opening\" — Dave does a used-car-lot-style pitch in front of a banner, announcing the business is OPEN. Over-the-top enthusiasm, confetti optional.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 2, platform: "Instagram", contentType: "Video", concept: "\"Meet the Founders\" — Both founders introduce themselves, explain the origin story (40+ year friendship, the ridiculous idea that became a real business).", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 3, platform: "Twitter/X", contentType: "Text", concept: "Launch announcement thread. Pin it. Include the origin story in 5 tweets. End with a link to the site.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 4, rest: true },
+  { day: 5, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #1\" — Dave picks a product and pitches it like a used car. Slaps it on the table. \"This baby's got LOW miles.\"", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 6, platform: "Email", contentType: "Email", concept: "Welcome email to launch-day subscribers. Introduce the brand voice, link to the first two videos, include a first-order discount code.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 7, rest: true },
+
+  // ── WEEK 2 ──
+  { day: 8, platform: "Instagram", contentType: "Video", concept: "\"Things Your Sex Ed Teacher Didn't Cover: Episode 1\" — Genuinely useful info about body-safe materials, delivered with Dave's commentary.", founder: "Both", series: "Educational Comedy", foundersWrite: true },
+  { day: 9, platform: "Twitter/X", contentType: "Image", concept: "Meme post: \"Nobody: ... Absolutely nobody: ... Dave: *slaps product*\" — Use the format with a product photo and Dave quote overlay.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 10, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #2\" — Dave showcases a best-seller. Walks around it like it's a car on a lot. Points out \"features.\"", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 11, rest: true },
+  { day: 12, platform: "YouTube", contentType: "Video", concept: "\"Why We Started a Dildo Company\" — Longer-form (2-3 min) origin story. Both founders, casual setting, real conversation about how the idea came about.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 13, platform: "Instagram", contentType: "Image", concept: "Product flat-lay photo with a clean aesthetic. No comedy — just a professional, well-lit product shot. Caption includes a subtle Dave quote.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 14, rest: true },
+
+  // ── WEEK 3 ──
+  { day: 15, platform: "TikTok", contentType: "Video", concept: "\"Dave Reacts to Our First Customer Reviews\" — Dave reads real (or staged early) customer feedback on camera. Genuine reactions.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 16, platform: "Twitter/X", contentType: "Text", concept: "\"Hot take\" post about the adult product industry — something opinionated but true (e.g., body-safe materials should be the standard, not the exception). Drive engagement.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 17, platform: "Instagram", contentType: "Video", concept: "\"Behind the Scenes: How We Pick Products\" — Both founders go through the actual vetting process. What makes the cut, what doesn't, and why quality matters.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 18, rest: true },
+  { day: 19, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #3\" — Dave does the pitch in a different setting (outdoors, garage, kitchen). Same energy, new backdrop.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 20, platform: "Email", contentType: "Email", concept: "\"Week 3 Roundup\" newsletter. Recap the best content so far, link to top videos, highlight a featured product, and tease upcoming content.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 21, rest: true },
+
+  // ── WEEK 4 ──
+  { day: 22, platform: "YouTube", contentType: "Video", concept: "\"Things Your Sex Ed Teacher Didn't Cover: Episode 2\" — Topic: how to actually clean and store products. Dave demonstrates with exaggerated care.", founder: "Both", series: "Educational Comedy", foundersWrite: true },
+  { day: 23, platform: "Twitter/X", contentType: "Image", concept: "Meme: screenshot-style \"text conversation\" where someone asks Dave for a product recommendation and he responds like he's selling a car.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 24, platform: "TikTok", contentType: "Video", concept: "\"Dave Reacts to Competitor Ads\" — Dave watches other brands' ads and reacts. Roasts the corporate cringe. Highlights what makes Dildo Dave's different.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 25, rest: true },
+  { day: 26, platform: "Instagram", contentType: "Video", concept: "\"Ask Dave Anything: Episode 1\" — Pull real DMs and comments. Dave answers them on camera in character.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 27, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #4\" — Introduce a \"Certified Pre-Enjoyed\" joke tag line for new-in-box products. Dave leans hard into the used-car bit.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 28, rest: true },
+
+  // ── WEEK 5 ──
+  { day: 29, platform: "Instagram", contentType: "Video", concept: "\"Duo Content: Dave vs. Co-Founder — Product Knowledge Quiz\" — Co-Founder quizzes Dave on real product specs. Dave improvises wildly wrong answers.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 30, platform: "Twitter/X", contentType: "Text", concept: "Engagement post: \"What's the worst euphemism you've ever heard for a dildo? We'll start...\" Thread-style interaction bait.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 31, platform: "TikTok", contentType: "Video", concept: "\"Dave's Garage Sale\" — Dave sets up a folding table with products and pitches them to the camera like a real garage sale. Neighbors optional.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 32, rest: true },
+  { day: 33, platform: "Email", contentType: "Email", concept: "\"Month 1 in Review\" — Celebrate milestones (follower counts, first X orders, best-performing video). Include exclusive discount for subscribers.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 34, platform: "YouTube", contentType: "Video", concept: "\"Things Your Sex Ed Teacher Didn't Cover: Episode 3\" — Topic: the difference between materials (silicone vs. TPE vs. others). Dave holds up examples.", founder: "Both", series: "Educational Comedy", foundersWrite: true },
+  { day: 35, rest: true },
+
+  // ── WEEK 6 ──
+  { day: 36, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #5\" — Dave introduces a \"Customer of the Week\" segment within the deal. Reads out a (anonymized) funny customer comment.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 37, platform: "Instagram", contentType: "Image", concept: "\"Dave's Business Card\" — Design a ridiculous business card for Dave (e.g., \"Dave, Chief Dildo Officer\"). Post the design as a carousel with front/back.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 38, platform: "Twitter/X", contentType: "Text", concept: "\"If dildo brands had honest slogans...\" — Post a thread of fake-but-true slogans. The punchline: Dildo Dave's actual slogan.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 39, rest: true },
+  { day: 40, platform: "TikTok", contentType: "Video", concept: "\"Dave Unboxes Our Own Products\" — Dave opens the shipping box like it's Christmas morning. Judges the packaging, the presentation, the whole experience.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 41, platform: "Instagram", contentType: "Video", concept: "\"Behind the Scenes: Filming a Deal of the Day\" — Show what it actually takes to film one of Dave's segments. Bloopers, re-takes, the real process.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 42, rest: true },
+
+  // ── WEEK 7 ──
+  { day: 43, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #6\" — \"Spring Clearance Event\" theme. Dave acts like there's a tent sale. Inflatable tube man energy.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 44, platform: "YouTube", contentType: "Video", concept: "\"Ask Dave Anything: Episode 2\" — Longer Q&A format. Source questions from all social platforms. Mix funny and genuinely helpful answers.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 45, platform: "Twitter/X", contentType: "Image", concept: "\"Product of the Week\" highlight — Clean product photo with a one-line Dave endorsement quote. Professional with a hint of Dave.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 46, rest: true },
+  { day: 47, platform: "Email", contentType: "Email", concept: "\"Dave's Picks\" email — Curated product selection (3-4 items), each with a one-line Dave pitch and a real product description. Discount code included.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 48, platform: "Instagram", contentType: "Video", concept: "\"Things Your Sex Ed Teacher Didn't Cover: Episode 4\" — Topic: communication with partners about products. Real advice, Dave's delivery.", founder: "Both", series: "Educational Comedy", foundersWrite: true },
+  { day: 49, rest: true },
+
+  // ── WEEK 8 ──
+  { day: 50, platform: "TikTok", contentType: "Video", concept: "\"Dave Goes to a Trade Show\" — Real or staged, Dave walks a convention floor (or a mock one) and commentates on the industry like a nature documentary.", founder: "Dave", series: "Behind the Scenes", foundersWrite: true },
+  { day: 51, platform: "Twitter/X", contentType: "Text", concept: "\"POV: You're at dinner and your friend asks what you do for work\" — Relatable thread about the reality of running an adult e-commerce business.", founder: "Both", series: "Meme / Text" },
+  { day: 52, platform: "Instagram", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #7\" — Cross-post a Deal of the Day to Instagram Reels for audience expansion. Same energy, different platform.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 53, rest: true },
+  { day: 54, platform: "TikTok", contentType: "Video", concept: "\"Dave Reacts to DMs\" — Curated set of DMs and comments. Dave reads them on camera. Mix of wholesome, hilarious, and bizarre.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 55, platform: "Instagram", contentType: "Image", concept: "\"This or That\" carousel — Two products side by side, clean photography, let the audience vote in comments. Drive engagement.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 56, rest: true },
+
+  // ── WEEK 9 ──
+  { day: 57, platform: "YouTube", contentType: "Video", concept: "\"Duo Content: The Founders Rank Our Best Sellers\" — Both founders rank the top 5 products. Disagree on purpose. Build a tier list on camera.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 58, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #8\" — \"Manager's Special\" theme. Dave pretends the manager (Co-Founder off-camera) is forcing him to slash prices.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 59, platform: "Twitter/X", contentType: "Text", concept: "Poll: \"What should Dave's next video be?\" — Give 4 options, let the audience pick. Great for engagement and making the audience feel involved.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 60, rest: true },
+  { day: 61, platform: "Email", contentType: "Email", concept: "\"Month 2 Update\" — Growth metrics to celebrate, community highlights, behind-the-scenes anecdote, plus a subscriber-exclusive bundle deal.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 62, platform: "Instagram", contentType: "Video", concept: "\"Things Your Sex Ed Teacher Didn't Cover: Episode 5\" — Topic: understanding product sizing and why it matters. Practical advice, comedic framing.", founder: "Both", series: "Educational Comedy", foundersWrite: true },
+  { day: 63, rest: true },
+
+  // ── WEEK 10 ──
+  { day: 64, platform: "TikTok", contentType: "Video", concept: "\"Dave's Infomercial\" — Full parody infomercial. Black and white \"problem\" scene, color \"solution\" scene. \"But wait, there's more!\" energy.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 65, platform: "Instagram", contentType: "Image", concept: "\"Caption This\" post — A photo of Dave mid-pitch with no context. Let the audience write the caption. Best one gets featured.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 66, platform: "Twitter/X", contentType: "Text", concept: "\"Unpopular opinion\" post about the adult industry. Something genuinely thoughtful that sparks real conversation. Position the brand as forward-thinking.", founder: "Both", series: "Meme / Text" },
+  { day: 67, rest: true },
+  { day: 68, platform: "TikTok", contentType: "Video", concept: "\"Dave Reacts to Our Own 1-Star Reviews\" — If any exist, Dave reads them dramatically. If not, read parody ones that are clearly absurd.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 69, platform: "Instagram", contentType: "Video", concept: "\"Day 69 Special\" — Both founders acknowledge the obvious. Special video, special deal, special energy. Lean all the way into it.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 70, rest: true },
+
+  // ── WEEK 11 ──
+  { day: 71, platform: "YouTube", contentType: "Video", concept: "\"Duo Content: Co-Founder Tries to Sell Like Dave\" — Co-Founder attempts the used-car-salesman pitch. Dave coaches/roasts from the side.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 72, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #9\" — \"Holiday Weekend Blowout\" (use whatever upcoming holiday applies). Dave in a themed outfit.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 73, platform: "Twitter/X", contentType: "Image", concept: "\"Things we've been asked\" — Screenshot compilation of the wildest (appropriate) customer questions. Anonymized, funny, relatable.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 74, rest: true },
+  { day: 75, platform: "Email", contentType: "Email", concept: "\"Dave's VIP List\" — Subscribers get early access to a new product drop. Build exclusivity. Include Dave's personal (in-character) recommendation.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 76, platform: "Instagram", contentType: "Video", concept: "\"Things Your Sex Ed Teacher Didn't Cover: Episode 6\" — Topic: solo vs. partnered use — breaking the stigma. Serious message, Dave's signature delivery.", founder: "Both", series: "Educational Comedy", foundersWrite: true },
+  { day: 77, rest: true },
+
+  // ── WEEK 12 ──
+  { day: 78, platform: "TikTok", contentType: "Video", concept: "\"Dave's Warehouse Tour\" — Dave walks through wherever inventory is stored (even if it's a closet). Gives it the full real-estate-tour treatment.", founder: "Dave", series: "Behind the Scenes", foundersWrite: true },
+  { day: 79, platform: "Twitter/X", contentType: "Text", concept: "\"Tell us your most embarrassing purchase story (any product, not just ours)\" — Engagement thread. Co-Founder shares one first to set the tone.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 80, platform: "Instagram", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #10\" — Milestone deal. Dave celebrates 10 episodes. Self-aware, meta, references his \"career\" in dildo sales.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 81, rest: true },
+  { day: 82, platform: "TikTok", contentType: "Video", concept: "\"Dave Reacts to AI-Generated Product Descriptions\" — Feed products into an AI, read the results on camera. Dave critiques them and writes his own.", founder: "Dave", series: "Reaction / Review", foundersWrite: true },
+  { day: 83, platform: "YouTube", contentType: "Video", concept: "\"90-Day Retrospective Preview\" — Both founders sit down and reflect on what's worked, what hasn't, and what's coming next. Honest and funny.", founder: "Both", series: "Behind the Scenes", foundersWrite: true },
+  { day: 84, rest: true },
+
+  // ── WEEK 13: Final Week ──
+  { day: 85, platform: "Instagram", contentType: "Video", concept: "\"Best of Dave: Month 3\" — Compilation reel of the best moments, reactions, and one-liners from the past 30 days.", founder: "Both", series: "Behind the Scenes", foundersWrite: false },
+  { day: 86, platform: "Twitter/X", contentType: "Text", concept: "\"What content do you want from us in the next 90 days?\" — Direct audience survey. List options, invite write-ins. Use responses for next calendar.", founder: "Co-Founder", series: "Meme / Text" },
+  { day: 87, platform: "TikTok", contentType: "Video", concept: "\"Dildo Dave's Deal of the Day #11\" — \"End of Quarter Clearance\" theme. Dave gets emotional about saying goodbye to certain stock.", founder: "Dave", series: "Deals of the Day", foundersWrite: true },
+  { day: 88, rest: true },
+  { day: 89, platform: "Email", contentType: "Email", concept: "\"Quarter 1 Wrap-Up\" newsletter — Full recap, top products, best content, community shoutouts, and a teaser for what's coming in the next 90 days.", founder: "Co-Founder", series: "Email Newsletter" },
+  { day: 90, platform: "TikTok", contentType: "Video", concept: "\"See You Next Quarter\" — Dave does a dramatic sign-off, teases what's coming. Co-Founder interrupts to remind him they're posting again on Monday.", founder: "Both", series: "Behind the Scenes", foundersWrite: true }
+];
+
+// ── Render Functions ──
+
+function buildSummary() {
+  const container = document.getElementById('summarySection');
+  const posts = calendarData.filter(d => !d.rest);
+  const restDays = calendarData.filter(d => d.rest);
+
+  const platformCounts = {};
+  const typeCounts = {};
+  posts.forEach(p => {
+    platformCounts[p.platform] = (platformCounts[p.platform] || 0) + 1;
+    typeCounts[p.contentType] = (typeCounts[p.contentType] || 0) + 1;
+  });
+
+  const platformColors = {
+    'TikTok': '#6B21A8',
+    'Instagram': '#BE185D',
+    'Twitter/X': '#0369A1',
+    'YouTube': '#B91C1C',
+    'Email': '#047857'
+  };
+
+  const typeColors = {
+    'Video': '#92400E',
+    'Image': '#3730A3',
+    'Text': '#374151',
+    'Email': '#047857'
+  };
+
+  let html = `
+    <div class="summary-grid">
+      <div class="summary-card">
+        <span class="number">${calendarData.length}</span>
+        <span class="label">Total Days</span>
+      </div>
+      <div class="summary-card">
+        <span class="number">${posts.length}</span>
+        <span class="label">Content Posts</span>
+      </div>
+      <div class="summary-card">
+        <span class="number">${restDays.length}</span>
+        <span class="label">Rest / Creation Days</span>
+      </div>
+      <div class="summary-card">
+        <span class="number">${posts.filter(p => p.contentType === 'Video').length}</span>
+        <span class="label">Video Posts</span>
+      </div>
+    </div>
+    <div class="summary-breakdown">
+      <div class="breakdown-card">
+        <h3>By Platform</h3>
+        <div class="breakdown-list">
+          ${Object.entries(platformCounts).map(([p, c]) => `
+            <div class="breakdown-item">
+              <span class="breakdown-dot" style="background:${platformColors[p] || '#6B6B6B'}"></span>
+              ${p}: <strong>${c}</strong>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="breakdown-card">
+        <h3>By Content Type</h3>
+        <div class="breakdown-list">
+          ${Object.entries(typeCounts).map(([t, c]) => `
+            <div class="breakdown-item">
+              <span class="breakdown-dot" style="background:${typeColors[t] || '#6B6B6B'}"></span>
+              ${t}: <strong>${c}</strong>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  container.innerHTML = html;
+}
+
+function getPlatformTagClass(platform) {
+  const map = {
+    'TikTok': 'tag-tiktok',
+    'Instagram': 'tag-instagram',
+    'Twitter/X': 'tag-twitter',
+    'YouTube': 'tag-youtube',
+    'Email': 'tag-email'
+  };
+  return map[platform] || 'tag-rest';
+}
+
+function getTypeTagClass(type) {
+  const map = {
+    'Video': 'tag-type-video',
+    'Image': 'tag-type-image',
+    'Text': 'tag-type-text',
+    'Email': 'tag-type-email'
+  };
+  return map[type] || '';
+}
+
+function renderCards(data) {
+  const grid = document.getElementById('calendarGrid');
+  if (data.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;color:#6B6B6B;padding:40px 0;">No entries match the selected filters.</p>';
+    return;
+  }
+
+  grid.innerHTML = data.map(entry => {
+    if (entry.rest) {
+      return `
+        <div class="calendar-card rest-day" data-platform="Rest" data-type="Rest">
+          <div class="day-badge">
+            <span class="day-number">${entry.day}</span>
+            <span class="day-label">Day</span>
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="tag tag-rest">Rest Day</span>
+            </div>
+            <p class="card-rest-text">No post — content creation, planning, and recharge day.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    const founderLabel = entry.founder === 'Both' ? 'Dave + Co-Founder' : entry.founder;
+
+    return `
+      <div class="calendar-card" data-platform="${entry.platform}" data-type="${entry.contentType}">
+        <div class="day-badge">
+          <span class="day-number">${entry.day}</span>
+          <span class="day-label">Day</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="tag ${getPlatformTagClass(entry.platform)}">${entry.platform}</span>
+            <span class="tag ${getTypeTagClass(entry.contentType)}">${entry.contentType}</span>
+            <span class="tag tag-founder">${founderLabel}</span>
+          </div>
+          <p class="card-concept">
+            ${entry.concept}
+            ${entry.foundersWrite ? '<span class="founders-write">[FOUNDERS WRITE THIS]</span>' : ''}
+          </p>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Filtering ──
+
+let activePlatform = 'all';
+let activeType = 'all';
+
+function applyFilters() {
+  const filtered = calendarData.filter(entry => {
+    const platformMatch = activePlatform === 'all'
+      || (activePlatform === 'Rest' && entry.rest)
+      || (!entry.rest && entry.platform === activePlatform);
+    const typeMatch = activeType === 'all'
+      || (entry.rest && activeType === 'all')
+      || (!entry.rest && entry.contentType === activeType);
+
+    // If filtering by type and it's a rest day, hide it (unless platform is Rest or All)
+    if (activeType !== 'all' && entry.rest) return false;
+
+    return platformMatch && typeMatch;
+  });
+
+  renderCards(filtered);
+
+  const count = filtered.filter(e => !e.rest).length;
+  const restCount = filtered.filter(e => e.rest).length;
+  const countEl = document.getElementById('resultsCount');
+  let text = `Showing <strong>${count}</strong> content post${count !== 1 ? 's' : ''}`;
+  if (restCount > 0) text += ` and <strong>${restCount}</strong> rest day${restCount !== 1 ? 's' : ''}`;
+  countEl.innerHTML = text;
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const group = this.dataset.group;
+    const filter = this.dataset.filter;
+
+    // Update active state in group
+    this.closest('.filter-buttons').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+
+    if (group === 'platform') activePlatform = filter;
+    if (group === 'type') activeType = filter;
+
+    applyFilters();
+  });
+});
+
+// ── Initialize ──
+buildSummary();
+applyFilters();
+</script>
+
+</body>
+</html>

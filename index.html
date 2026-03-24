@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dildo Dave's Dildo Emporium</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Age Gate -->
+<div class="age-gate">
+  <div class="age-gate-box">
+    <h2>Welcome</h2>
+    <p>You must be 21 or older to enter this site.</p>
+    <div class="age-gate-buttons">
+      <button class="btn btn-primary" onclick="ageVerify(true)">I'm 21+</button>
+      <button class="btn age-gate-deny" onclick="ageVerify(false)">I'm Not</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <nav class="container nav-inner">
+    <a href="index.html" class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="products.html">Shop</a></li>
+
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="calendar.html">Calendar</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>Dildo Dave's<br>Dildo Emporium</h1>
+    <p class="subtitle">Premium intimate products. Carefully curated. Discreetly shipped.</p>
+    <a href="products.html" class="btn btn-primary btn-lg">Shop Now</a>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Best Sellers</h2>
+      <p>Our most popular products.</p>
+    </div>
+    <div class="product-grid" id="featured-grid"></div>
+    <div class="text-center mt-4">
+      <a href="products.html" class="btn btn-secondary">View All Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- Value Props -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="value-grid">
+      <div class="value-item">
+        <div class="value-icon">🔒</div>
+        <h4>Discreet Shipping</h4>
+        <p>Plain packaging. No logos. No indication of contents.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">✓</div>
+        <h4>Body-Safe Materials</h4>
+        <p>Medical-grade silicone, stainless steel, and borosilicate glass only.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">↩</div>
+        <h4>Easy Returns</h4>
+        <p>30-day returns on unopened items. No questions asked.</p>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">💬</div>
+        <h4>Real Humans</h4>
+        <p>Customer support from real people. Fast, helpful responses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Email Signup -->
+<section class="signup-section">
+  <div class="container">
+    <h2>Stay in the Loop</h2>
+    <p>Deals, new arrivals, and exclusive offers. No spam.</p>
+    <form class="signup-form" onsubmit="event.preventDefault(); alert('Thanks! (This is a demo.)')">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo">Dildo Dave's <span>Dildo Emporium</span></span>
+        <p style="margin-top: 12px;">Premium intimate products. Carefully curated. Discreetly shipped.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=Vibrators">Vibrators</a></li>
+          <li><a href="products.html?cat=Non-Vibrating Toys">Non-Vibrating</a></li>
+          <li><a href="products.html?cat=Couples' Toys">Couples</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter/X</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Dildo Dave's Dildo Emporium. All rights reserved. You must be 21+ to purchase.
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Load featured products (show 4)
+  loadProducts().then(products => {
+    const featured = [2, 7, 14, 10]; // Overachiever, Executive, Compromise, Gentleman
+    const grid = document.getElementById('featured-grid');
+    featured.forEach(id => {
+      const p = products.find(x => x.id === id);
+      if (p) grid.appendChild(createProductCard(p));
+    });
+  });
+</script>
+</body>
+</html>
